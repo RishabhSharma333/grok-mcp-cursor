@@ -60,7 +60,7 @@ XAI_API_KEY=<yourGrokAPIKey> node <pathToGrokMcpFolder>/build/index.js
 
 ## Verification
 
-Before integrating with Cursor, to verify that the server runs correctly, we can use MCP inspector:
+Before integrating with Cursor, to verify that the server runs correctly, we can use [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector):
 
 ```bash
 npx @modelcontextprotocol/inspector -e GROK_API_KEY=<yourGrokAPIKey> node <pathToGrokMcpFolder>/build/index.js
@@ -82,3 +82,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - [Model Context Protocol](https://github.com/modelcontextprotocol/mcp)
 - [MCP Sdk](https://github.com/modelcontextprotocol/typescript-sdk)
+- [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector)
