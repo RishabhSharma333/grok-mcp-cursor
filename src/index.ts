@@ -11,7 +11,6 @@ if (!config.API_KEY) {
     throw new Error('[Error] XAI_API_KEY environment variable is required');
 }
 
-
 class GrokServer {
     private server: McpServer;
     private apiKey: string | undefined;
@@ -43,7 +42,7 @@ class GrokServer {
                 messages,
                 model: options.model || 'grok-3-latest',
                 stream: false,
-                temperature:0,
+                temperature: 0,
                 ...options
             };
 
@@ -54,12 +53,12 @@ class GrokServer {
                     headers: headers
 
                 });
-            
+
             console.log("RESPONSE IS " + response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             return await response.json();
 
         } catch (error) {
@@ -69,18 +68,6 @@ class GrokServer {
     }
 
     // Start receiving messages on stdin and sending messages on stdout
-
-    // initializeTool() {
-    //     this.server.tool("grok-model",
-    //         "This returns summation of two numbers",
-    //         { a: z.number(), b: z.number() },
-    //         async ({ a, b }) => {
-    //             return {
-    //                 content: [{ type: 'text', text: `This will return summation of two numbers ${a + b}` }]
-    //             }
-    //         }
-    //     );
-    // }
 
 
     private initializeTool() {
@@ -94,7 +81,6 @@ class GrokServer {
                 }];
                 const response = await this.handleChatCompletion(messages);
 
-                console.log("GETTING THE RESPONSE");
                 return {
                     content: [{ type: 'text', text: response }]
                 }
@@ -113,6 +99,18 @@ const grokServer = new GrokServer();
 grokServer.runServer();
 
 //tools let LLM take actions through your server.
+
+// initializeTool() {
+//     this.server.tool("grok-model",
+//         "This returns summation of two numbers",
+//         { a: z.number(), b: z.number() },
+//         async ({ a, b }) => {
+//             return {
+//                 content: [{ type: 'text', text: `This will return summation of two numbers ${a + b}` }]
+//             }
+//         }
+//     );
+// }
 
 // server.tool("grok-model",
 //     "This returns summation of two numbers",
