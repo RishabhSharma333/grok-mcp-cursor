@@ -65,9 +65,6 @@ class GrokServer {
         }
     }
 
-    // Start receiving messages on stdin and sending messages on stdout
-
-
     private initializeTool() {
         this.server.tool("grok-model",
             "Use code completion capabilities of Grok",
