@@ -55,7 +55,7 @@ The `grok-mcp-cursor` package provides a local Model Context Protocol (MCP) serv
 To start the MCP server locally, execute the following command, replacing `<yourGrokAPIKey>` with your Grok API key:
 
 ```bash
-XAI_API_KEY=<yourGrokAPIKey> node build/index.js
+XAI_API_KEY=<yourGrokAPIKey> node <pathToGrokMcpFolder>/build/index.js
 ```
 
 ## Verification
