@@ -1,9 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import dotenv from 'dotenv';
 
-const API_KEY = process.env.GROK_API_KEY;
-if (!API_KEY) {
+dotenv.config();
+const config = {
+    API_KEY: process.env['GROK_API_KEY'] || undefined
+}
+if (!config.API_KEY) {
     // throw new Error('[Error] XAI_API_KEY environment variable is required');
     console.error("no API key");
 }
@@ -15,7 +19,7 @@ class GrokConfig {
     private apiKey: string | undefined;
     private baseUrl: string = 'https://api.x.ai/v1';
     constructor(apikey: string) {
-        this.apiKey = API_KEY;
+        this.apiKey = config.API_KEY;
     }
 }
 
