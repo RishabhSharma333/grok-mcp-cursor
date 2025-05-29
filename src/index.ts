@@ -2,11 +2,13 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-
-
 const API_KEY = process.env.GROK_API_KEY;
 if (!API_KEY) {
-    throw new Error('[Error] XAI_API_KEY environment variable is required');
+    // throw new Error('[Error] XAI_API_KEY environment variable is required');
+    console.error("no API key");
+}
+else {
+    console.log("we have API key");
 }
 
 class GrokConfig {
@@ -35,13 +37,28 @@ class GrokServer {
     }
 
     // Start receiving messages on stdin and sending messages on stdout
-    async run() {
+
+    initializeTool() {
+        this.server.tool("grok-model",
+            "This returns summation of two numbers",
+            { a: z.number(), b: z.number() },
+            async ({ a, b }) => {
+                return {
+                    content: [{ type: 'text', text: `This will return summation of two numbers ${a + b}` }]
+                }
+            }
+        );
+    }
+
+    async runServer() {
         const transport = new StdioServerTransport();
         await this.server.connect(transport);
     }
 }
 
-
+const grokServer = new GrokServer();
+grokServer.initializeTool();
+grokServer.runServer();
 
 //tools let LLM take actions through your server.
 
@@ -69,8 +86,12 @@ class GrokServer {
 // );
 
 
-
 // resources are how you expose data to the LLMs, they provide data but do not do any significant conputation. It can be dynamic or static
 
 // prompts are reusable templates that help LLMs interact with your server 
 
+// # Pass arguments only
+//  npx @modelcontextprotocol/inspector node build/index.js arg1 arg2
+
+// # Pass environment variables only
+// npx @modelcontextprotocol/inspector -e key=value -e key2=$VALUE2 node build/index.js
