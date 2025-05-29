@@ -32,7 +32,7 @@ class GrokServer {
 
     async handleChatCompletion(messages: any[], options: any = {}): Promise<any> {
         try {
-            console.log('[API] Creating chat completion...');
+            console.log('chat completion');
             const headers = {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${this.apiKey}`
