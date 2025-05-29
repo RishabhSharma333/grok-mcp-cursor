@@ -1,65 +1,84 @@
-# grok-mcp for cursor
-This package will create a local MCP server which can be used with Cursor AI for agent mode
+# Grok MCP for Cursor
+
+The `grok-mcp-cursor` package provides a local Model Context Protocol (MCP) server, enabling integration with Cursor AI in agent mode. It leverages the Grok AI model from xAI to generate responses, offering a seamless experience for developers using Cursor.
 
 ## Features
-It will use Grok's AI model to generate responses, hence can be used with Cursor using MCP servers
+- Utilizes the Grok AI model to generate response.
+- Compatible with Cursor AI via MCP server integration.
 
-## Requirements
-1. Nodejs
-2. Grok API key
+## Prerequisites
+- Node.js (version 16 or higher recommended)
+- A valid Grok API key from xAI
 
 ## Installation
 
-1. Clone this repository:
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/RishabhSharma333/grok-mcp-cursor.git
-   cd grok-mcp-server
+   cd grok-mcp-cursor
    ```
 
-2. Install dependencies:
+2. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-3. Build the project:
+3. **Build the Project**:
    ```bash
    npm run build
    ```
 
-4. Add its details inside mcp.json file found in .cursor folder
+4. **Configure Cursor MCP Settings**:
+   - Locate the `mcp.json` file in the `.cursor` directory of your user home folder.
+   - Add the following configuration to `mcp.json`. :
+     ```json
+     {
+       "mcpServers": {
+         "grok-mcp": {
+           "env": {
+             "GROK_API_KEY": "<yourGrokAPIKeyHere>"
+           },
+           "command": "node",
+           "args": [
+             "<pathtoGrokMcpFolder>/build/index.js"
+           ]
+         }
+       }
+     }
+     ```
+   - If any configuration is already present, make an new object under "mcpServers".
+   - Replace `<yourGrokAPIKeyHere>` with your Grok API key and `<pathToGrokMcpFolder>` with the absolute path to the `grok-mcp-cursor` folder.
+   - After configuration, the `grok-mcp` server will appear in Cursor’s MCP server settings, and the `grok-model` will be visible under tools.
 
-It should look similar to this depending upon how many servers are already added. If any configuration is already present, make an new object under "mcpServers" similar to this.
+## Running the Server
+
+To start the MCP server locally, execute the following command, replacing `<yourGrokAPIKey>` with your Grok API key:
 
 ```bash
-   {
-  "mcpServers": {
-    "grok-mcp": {
-      "env": {
-        "Grok_API_KEY": "<yourGrokAPIKeyHere>"
-      },
-      "command": "node",
-      "args": [
-        "<pathTogrok-mcp>/grok-mcp-server/build/index.js"
-      ]
-    },
-
-    "any-other-mcp-server":{
-
-    }
-    ...
-  }
-}
-   ```
-
-After configuration is added, cursor will show 'grok-mcp' under MCP server settings. and 'grok-model' under tool
-
-## Running 
-```bash
-XAI_API_KEY="your-grok-api-key" node build/index.js
+XAI_API_KEY=<yourGrokAPIKey> node build/index.js
 ```
 
-## Checks
-Before adding to cursor MCP configuration, We can also check if it is running locally using command below
+## Verification
+
+Before integrating with Cursor, to verify that the server runs correctly, we can use MCP inspector:
+
 ```bash
-npx @modelcontextprotocol/inspector -e GROK_API_KEY=<yourGrokApiKey> node <pathtogrok-mcp-server-folder>/build/index.js
+npx @modelcontextprotocol/inspector -e GROK_API_KEY=<yourGrokAPIKey> node <pathToGrokMcpFolder>/build/index.js
 ```
+
+This command checks the server’s functionality and ensures it is operational.
+
+## Notes
+- Ensure the `.env` file is not committed to version control. Add `.env` to your `.gitignore` file to prevent exposing sensitive information like API keys.
+- For production environments, consider setting environment variables directly on your server instead of relying on a `.env` file.
+
+## Contributing
+Contributions are welcome! Please submit issues or pull requests via the [GitHub repository](https://github.com/RishabhSharma333/grok-mcp-cursor).
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [Model Context Protocol](https://github.com/modelcontextprotocol/mcp)
+- [MCP Sdk](https://github.com/modelcontextprotocol/typescript-sdk)
