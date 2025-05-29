@@ -1,4 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
 const server = new McpServer({
@@ -30,4 +31,9 @@ server.tool(
     }
 );
 
-// resources are how you expose data to the LLMs, they provide data but do not do any significant conputation
+// resources are how you expose data to the LLMs, they provide data but do not do any significant conputation. It can be dynamic or static
+
+// prompts are reusable templates that help LLMs interact with your server 
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
