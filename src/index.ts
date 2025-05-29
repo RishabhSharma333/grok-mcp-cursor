@@ -51,10 +51,8 @@ class GrokServer {
                     method: "POST",
                     body: JSON.stringify(requestBody),
                     headers: headers
-
                 });
 
-            console.log("RESPONSE IS " + response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
